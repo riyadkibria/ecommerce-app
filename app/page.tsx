@@ -1,213 +1,69 @@
-// File: app/page.tsx
-
 import Image from "next/image";
-import Link from "next/link";
-
-const featuredProducts = [
-  {
-    id: 1,
-    name: "Wireless Headphone",
-    price: "$129",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
-  },
-  {
-    id: 2,
-    name: "Smart Watch",
-    price: "$249",
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
-  },
-  {
-    id: 3,
-    name: "Gaming Keyboard",
-    price: "$89",
-    image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=800&q=80",
-  },
-  {
-    id: 4,
-    name: "4K Monitor",
-    price: "$399",
-    image: "https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?w=800&q=80",
-  },
-];
-
-const categories = [
-  "Electronics",
-  "Fashion",
-  "Home & Living",
-  "Gaming",
-];
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-50">
-      {/* ================= Navbar ================= */}
-      <header className="sticky top-0 z-50 border-b bg-white">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-          <Link href="/" className="text-2xl font-bold text-blue-600">
-            ShopHub
-          </Link>
-
-          <nav className="hidden gap-8 md:flex">
-            <Link href="#" className="hover:text-blue-600">
-              Home
-            </Link>
-            <Link href="#" className="hover:text-blue-600">
-              Shop
-            </Link>
-            <Link href="#" className="hover:text-blue-600">
-              Categories
-            </Link>
-            <Link href="#" className="hover:text-blue-600">
-              Contact
-            </Link>
-          </nav>
-
-          <div className="flex gap-3">
-            <button className="rounded-lg border px-4 py-2 hover:bg-gray-100">
-              Login
-            </button>
-
-            <button className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
-              Cart (0)
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* ================= Hero ================= */}
-      <section className="bg-gradient-to-r from-blue-700 to-indigo-700 text-white">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 py-20 md:grid-cols-2">
-          <div>
-            <p className="mb-3 text-blue-200 uppercase tracking-widest">
-              New Collection 2026
-            </p>
-
-            <h1 className="mb-6 text-5xl font-bold leading-tight">
-              Discover Amazing Products
-            </h1>
-
-            <p className="mb-8 text-lg text-blue-100">
-              Shop premium electronics, fashion, home essentials, and gaming
-              accessories at unbeatable prices.
-            </p>
-
-            <div className="flex gap-4">
-              <button className="rounded-xl bg-white px-6 py-3 font-semibold text-blue-700 hover:bg-gray-100">
-                Shop Now
-              </button>
-
-              <button className="rounded-xl border border-white px-6 py-3 hover:bg-white hover:text-blue-700">
-                Learn More
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-center">
-            <Image
-              src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=900&q=80"
-              alt="Hero"
-              width={550}
-              height={550}
-              className="rounded-3xl object-cover shadow-2xl"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ================= Categories ================= */}
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <h2 className="mb-8 text-3xl font-bold">Shop by Category</h2>
-
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {categories.map((category) => (
-            <div
-              key={category}
-              className="rounded-2xl bg-white p-8 text-center shadow transition hover:-translate-y-1 hover:shadow-lg"
+    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+        <Image
+          className="dark:invert h-5 w-[100px]"
+          src="/next.svg"
+          alt="Next.js logo"
+          width={100}
+          height={20}
+          priority
+        />
+        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+            To get started, edit the{" "}
+            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
+              page.tsx
+            </code>{" "}
+            file.
+          </h1>
+          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+            Looking for a starting point or more instructions? Head over to{" "}
+            <a
+              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+              className="font-medium text-zinc-950 dark:text-zinc-50"
             >
-              <h3 className="text-lg font-semibold">{category}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ================= Featured Products ================= */}
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-3xl font-bold">
-            Featured Products
-          </h2>
-
-          <Link href="#" className="text-blue-600 hover:underline">
-            View All
-          </Link>
-        </div>
-
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="overflow-hidden rounded-2xl bg-white shadow transition hover:-translate-y-2 hover:shadow-xl"
+              Templates
+            </a>{" "}
+            or the{" "}
+            <a
+              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+              className="font-medium text-zinc-950 dark:text-zinc-50"
             >
-              <div className="relative h-64">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              <div className="p-5">
-                <h3 className="mb-2 text-xl font-semibold">
-                  {product.name}
-                </h3>
-
-                <p className="mb-4 text-lg font-bold text-blue-600">
-                  {product.price}
-                </p>
-
-                <button className="w-full rounded-lg bg-blue-600 py-3 text-white hover:bg-blue-700">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ================= Promotion ================= */}
-      <section className="bg-blue-600 py-20 text-white">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <h2 className="mb-4 text-4xl font-bold">
-            Big Sale Up To 50% Off
-          </h2>
-
-          <p className="mb-8 text-lg">
-            Limited time offer on selected products.
+              Learning
+            </a>{" "}
+            center.
           </p>
-
-          <button className="rounded-xl bg-white px-8 py-3 font-semibold text-blue-600 hover:bg-gray-100">
-            Shop Deals
-          </button>
         </div>
-      </section>
-
-      {/* ================= Footer ================= */}
-      <footer className="bg-gray-900 py-10 text-gray-300">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
-          <h3 className="text-2xl font-bold text-white">
-            ShopHub
-          </h3>
-
-          <p>© 2026 ShopHub. All rights reserved.</p>
-
-          <div className="flex gap-6">
-            <Link href="#">Privacy</Link>
-            <Link href="#">Terms</Link>
-            <Link href="#">Support</Link>
-          </div>
+        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+          <a
+            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className="dark:invert h-[14px] w-4"
+              src="/vercel.svg"
+              alt="Vercel logomark"
+              width={16}
+              height={14}
+            />
+            Deploy Now
+          </a>
+          <a
+            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Documentation
+          </a>
         </div>
-      </footer>
-    </main>
+      </main>
+    </div>
   );
 }
