@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import LogoutButton from "@/components/LogoutButton";
 import { getProfile } from "@/app/actions/profile";
 
