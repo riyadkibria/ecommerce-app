@@ -1,7 +1,12 @@
 import LogoutButton from "@/components/LogoutButton";
+import { getProfile } from "@/app/actions/profile";
 
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+
+
+  const result = await getProfile();
+
 
   return (
 
@@ -14,9 +19,42 @@ export default function DashboardPage() {
         </h1>
 
 
-        <p>
-          You are logged in.
-        </p>
+        {
+          result.error ? (
+
+            <p className="text-red-600">
+              {result.error}
+            </p>
+
+          ) : (
+
+            <div className="space-y-2">
+
+              <p>
+                You are logged in.
+              </p>
+
+
+              <p>
+                Role:
+                {" "}
+                <strong>
+                  {result.profile?.role}
+                </strong>
+              </p>
+
+
+              <p>
+                User ID:
+                {" "}
+                {result.profile?.id}
+              </p>
+
+
+            </div>
+
+          )
+        }
 
 
         <LogoutButton />
