@@ -23,9 +23,11 @@ export async function register(
 
 
   if (error) {
+
     return {
       error: error.message,
     };
+
   }
 
 
@@ -57,15 +59,46 @@ export async function login(
 
 
   if (error) {
+
     return {
       error: error.message,
     };
+
   }
 
 
   return {
     success: true,
     user: data.user,
+  };
+
+}
+
+
+// =======================
+// LOGOUT ACTION
+// =======================
+
+export async function logout() {
+
+  const supabase = await createClient();
+
+
+  const { error } =
+    await supabase.auth.signOut();
+
+
+  if (error) {
+
+    return {
+      error: error.message,
+    };
+
+  }
+
+
+  return {
+    success: true,
   };
 
 }
