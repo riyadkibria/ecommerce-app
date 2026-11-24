@@ -1,10 +1,11 @@
-export const dynamic = "force-dynamic";
-
+import { unstable_noStore as noStore } from "next/cache";
 import LogoutButton from "@/components/LogoutButton";
 import { getProfile } from "@/app/actions/profile";
 
 
 export default async function DashboardPage() {
+
+  noStore();
 
 
   const result = await getProfile();
