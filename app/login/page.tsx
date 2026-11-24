@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { login } from "@/app/actions/auth";
 
 
 export default function LoginPage() {
+
+  const router = useRouter();
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +23,9 @@ export default function LoginPage() {
     e.preventDefault();
 
 
+    setMessage("");
+
+
     const result = await login(
       email,
       password
@@ -26,12 +33,18 @@ export default function LoginPage() {
 
 
     if (result.error) {
+
       setMessage(result.error);
+
       return;
+
     }
 
 
     setMessage("Login successful");
+
+
+    router.push("/dashboard");
 
   }
 
@@ -57,7 +70,8 @@ export default function LoginPage() {
           onChange={(e) =>
             setEmail(e.target.value)
           }
-          className="border p-2"
+          className="border p-2 w-full"
+          required
         />
 
 
@@ -68,13 +82,14 @@ export default function LoginPage() {
           onChange={(e) =>
             setPassword(e.target.value)
           }
-          className="border p-2"
+          className="border p-2 w-full"
+          required
         />
 
 
         <button
           type="submit"
-          className="bg-black text-white p-2 rounded"
+          className="bg-black text-white p-2 rounded w-full"
         >
           Login
         </button>
