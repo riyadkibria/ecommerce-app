@@ -1,11 +1,11 @@
-import { unstable_noStore as noStore } from "next/cache";
+export const instant = false;
 import LogoutButton from "@/components/LogoutButton";
 import { getProfile } from "@/app/actions/profile";
 
 
 export default async function DashboardPage() {
 
-  noStore();
+ 
 
 
   const result = await getProfile();
