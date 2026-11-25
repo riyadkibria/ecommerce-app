@@ -1,23 +1,27 @@
-import { requireRole } from "@/lib/auth";
+import { Suspense } from "react";
+import AdminGuard from "./AdminGuard";
 
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
 
 
-  await requireRole("admin");
-
-
   return (
 
-    <section>
+    <Suspense fallback={
+      <div>
+        Checking access...
+      </div>
+    }>
 
-      {children}
+      <AdminGuard>
+        {children}
+      </AdminGuard>
 
-    </section>
+    </Suspense>
 
   );
 
