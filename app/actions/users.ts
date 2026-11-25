@@ -11,15 +11,7 @@ export async function getAllUsers() {
   const { data: users, error } =
     await supabase
       .from("profiles")
-      .select(
-        `
-        id,
-        email,
-        full_name,
-        role,
-        created_at
-        `
-      )
+      .select("*")
       .order("created_at", {
         ascending: false,
       });
