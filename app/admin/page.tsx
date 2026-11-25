@@ -1,26 +1,20 @@
-import { requireRole } from "@/lib/auth";
+import { Suspense } from "react";
+import AdminContent from "./AdminContent";
 
-export default async function AdminPage() {
 
-  const { user } = await requireRole("admin");
+export default function AdminPage() {
 
   return (
 
-    <div className="flex min-h-screen items-center justify-center">
+    <Suspense fallback={
+      <p>
+        Loading...
+      </p>
+    }>
 
-      <div className="border rounded p-8">
+      <AdminContent />
 
-        <h1 className="text-3xl font-bold">
-          Admin Dashboard
-        </h1>
-
-        <p className="mt-4">
-          Welcome {user.email}
-        </p>
-
-      </div>
-
-    </div>
+    </Suspense>
 
   );
 
