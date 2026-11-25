@@ -39,9 +39,9 @@ export async function requireRole(
     redirect("/login");
   }
 
-  if (profile.role !== role) {
-    redirect("/dashboard");
-  }
+ if (profile.role !== role) {
+  throw new Error("ACCESS_DENIED");
+}
 
   return {
     user,
