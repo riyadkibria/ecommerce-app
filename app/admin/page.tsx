@@ -1,20 +1,22 @@
-import { Suspense } from "react";
-import AdminContent from "./AdminContent";
-
-
 export default function AdminPage() {
 
   return (
 
-    <Suspense fallback={
-      <p>
-        Loading...
-      </p>
-    }>
+    <div className="flex min-h-screen items-center justify-center">
 
-      <AdminContent />
+      <div className="border rounded p-8">
 
-    </Suspense>
+        <h1 className="text-3xl font-bold">
+          Admin Dashboard
+        </h1>
+
+        <p className="mt-3">
+          Welcome to admin panel
+        </p>
+
+      </div>
+
+    </div>
 
   );
 
