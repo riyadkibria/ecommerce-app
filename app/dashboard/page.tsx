@@ -1,12 +1,13 @@
 export const instant = false;
+
 import LogoutButton from "@/components/LogoutButton";
 import { getProfile } from "@/app/actions/profile";
+import { requireAuth } from "@/lib/auth";
 
 
 export default async function DashboardPage() {
 
- 
-
+  await requireAuth();
 
   const result = await getProfile();
 
@@ -20,7 +21,6 @@ export default async function DashboardPage() {
         <h1 className="text-3xl font-bold">
           Dashboard
         </h1>
-
 
         {
           result.error ? (
@@ -37,7 +37,6 @@ export default async function DashboardPage() {
                 You are logged in.
               </p>
 
-
               <p>
                 Role:
                 {" "}
@@ -46,22 +45,18 @@ export default async function DashboardPage() {
                 </strong>
               </p>
 
-
               <p>
                 User ID:
                 {" "}
                 {result.profile?.id}
               </p>
 
-
             </div>
 
           )
         }
 
-
         <LogoutButton />
-
 
       </div>
 
