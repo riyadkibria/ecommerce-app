@@ -1,3 +1,4 @@
+export const instant = false;
 import { getProducts } from "@/app/actions/products";
 
 import ProductGrid from "@/components/products/ProductGrid";
