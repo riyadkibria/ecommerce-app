@@ -1,55 +1,116 @@
 "use client";
 
+
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
 import type { Product } from "@/types/product";
 
+import { addToCart } from "@/app/actions/cart";
+
+
+
 type ProductCardProps = {
+
   product: Product;
+
 };
+
+
+
 
 export default function ProductCard({
   product,
 }: ProductCardProps) {
 
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "added"
-  >("idle");
 
-  const outOfStock = product.stock <= 0;
+  const [status, setStatus] =
+    useState<
+      "idle" | "loading" | "added"
+    >("idle");
+
+
+
+  const outOfStock =
+    product.stock <= 0;
+
+
 
   const lowStock =
     product.stock > 0 &&
     product.stock <= 5;
 
+
+
+
+
   async function handleAddToCart() {
 
-    if (outOfStock || status !== "idle") {
+
+    if(
+      outOfStock ||
+      status !== "idle"
+    ){
+
       return;
+
     }
 
-    setStatus("loading");
 
-    // TODO:
-    // Replace with your real cart action
 
-    await new Promise((resolve) =>
-      setTimeout(resolve, 600)
-    );
+    try {
 
-    setStatus("added");
 
-    setTimeout(() => {
+      setStatus("loading");
+
+
+
+      await addToCart(
+        product.id
+      );
+
+
+
+      setStatus("added");
+
+
+
+      setTimeout(()=>{
+
+        setStatus("idle");
+
+      },1500);
+
+
+
+    }
+    catch(error){
+
+
+      console.error(
+        "Add to cart error:",
+        error
+      );
+
+
+
       setStatus("idle");
-    }, 1500);
+
+
+    }
+
 
   }
+
+
+
+
 
   return (
 
     <article
+
       className="
         overflow-hidden
         rounded-xl
@@ -63,16 +124,25 @@ export default function ProductCard({
         dark:border-stone-800
         dark:bg-stone-900
       "
+
     >
 
+
+
       <Link
+
         href={`/products/${product.id}`}
+
         className="block"
+
       >
+
 
         <div className="group">
 
+
           <div
+
             className="
               relative
               aspect-square
@@ -80,29 +150,54 @@ export default function ProductCard({
               bg-stone-100
               dark:bg-stone-800
             "
+
           >
 
+
             <Image
+
               src={
                 product.thumbnail ??
                 "/images/placeholder.png"
               }
-              alt={product.name}
+
+              alt={
+                product.name
+              }
+
               fill
+
               sizes="300px"
+
               className="
                 object-cover
                 transition-transform
                 duration-500
                 group-hover:scale-105
               "
+
             />
+
 
           </div>
 
-          <div className="space-y-2 p-3">
+
+
+
+
+          <div
+
+            className="
+              space-y-2
+              p-3
+            "
+
+          >
+
+
 
             <h2
+
               className="
                 line-clamp-2
                 min-h-[40px]
@@ -111,29 +206,51 @@ export default function ProductCard({
                 text-stone-900
                 dark:text-white
               "
+
             >
+
               {product.name}
+
+
             </h2>
 
+
+
+
+
+
+
             <div
+
               className="
                 flex
                 items-center
                 justify-between
               "
+
             >
 
+
+
               <p
+
                 className="
                   text-lg
                   font-bold
                   tracking-tight
                 "
+
               >
+
                 ${product.price}
+
               </p>
 
+
+
+
               <span
+
                 className="
                   flex
                   items-center
@@ -141,22 +258,38 @@ export default function ProductCard({
                   text-xs
                   text-amber-500
                 "
+
               >
+
                 ★ {product.rating}
+
               </span>
+
+
 
             </div>
 
+
+
+
+
+
+
             <div
+
               className="
                 flex
                 items-center
                 justify-between
                 text-xs
               "
+
             >
 
+
+
               <span
+
                 className={`font-medium ${
                   outOfStock
                     ? "text-red-500"
@@ -164,26 +297,67 @@ export default function ProductCard({
                     ? "text-amber-600"
                     : "text-green-600"
                 }`}
+
               >
-                {outOfStock
-                  ? "Out of stock"
-                  : `${product.stock} left`}
+
+                {
+                  outOfStock
+                  ?
+                  "Out of stock"
+                  :
+                  `${product.stock} left`
+                }
+
+
               </span>
+
+
 
             </div>
 
+
+
+
           </div>
+
+
 
         </div>
 
+
+
       </Link>
 
-      <div className="px-3 pb-3">
+
+
+
+
+
+
+      <div
+
+        className="
+          px-3
+          pb-3
+        "
+
+      >
+
+
 
         <button
+
           type="button"
-          onClick={handleAddToCart}
-          disabled={outOfStock}
+
+          onClick={
+            handleAddToCart
+          }
+
+          disabled={
+            outOfStock ||
+            status === "loading"
+          }
+
           className="
             h-10
             w-full
@@ -201,23 +375,52 @@ export default function ProductCard({
             dark:text-black
             dark:hover:bg-stone-200
           "
+
         >
 
-          {outOfStock && "Out of Stock"}
 
-          {!outOfStock &&
+
+          {
+            outOfStock &&
+            "Out of Stock"
+          }
+
+
+
+
+          {
+            !outOfStock &&
             status === "idle" &&
-            "Add to Cart"}
+            "Add to Cart"
+          }
 
-          {status === "loading" &&
-            "Adding..."}
 
-          {status === "added" &&
-            "✓ Added"}
+
+
+          {
+            status === "loading" &&
+            "Adding..."
+          }
+
+
+
+
+          {
+            status === "added" &&
+            "✓ Added"
+          }
+
+
 
         </button>
 
+
+
+
       </div>
+
+
+
 
     </article>
 

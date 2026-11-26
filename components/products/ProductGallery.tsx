@@ -12,14 +12,7 @@ export default function ProductGallery({
 
   return (
 
-    <div
-      className="
-        w-full
-        max-w-[420px]
-        lg:sticky
-        lg:top-24
-      "
-    >
+    <div className="w-full max-w-[400px]">
 
       <div
         className="
@@ -44,7 +37,7 @@ export default function ProductGallery({
           alt={product.name}
           fill
           priority
-          sizes="420px"
+          sizes="400px"
           className="
             object-cover
             transition-transform

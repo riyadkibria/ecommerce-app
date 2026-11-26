@@ -15,9 +15,12 @@ export default function ProductDetails({
 
     <section
       className="
+        mx-auto
         grid
-        gap-10
-        lg:grid-cols-2
+        max-w-5xl
+        items-start
+        gap-8
+        lg:grid-cols-[400px_minmax(0,1fr)]
       "
     >
 
