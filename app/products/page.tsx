@@ -11,7 +11,7 @@ type Product = {
 export default async function ProductsPage() {
 
   const response = await fetch(
-    "https://dummyjson.com/products?limit=10"
+    "https://dummyjson.com/products?limit=100"
   );
 
   const data = await response.json();
