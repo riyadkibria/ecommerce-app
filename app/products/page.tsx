@@ -1,22 +1,11 @@
 export const instant = false;
 
-
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  thumbnail: string;
-};
+import ProductCard from "@/components/ProductCard";
+import { getProducts } from "@/lib/products";
 
 export default async function ProductsPage() {
 
-  const response = await fetch(
-    "https://dummyjson.com/products?limit=100"
-  );
-
-  const data = await response.json();
-
-  const products: Product[] = data.products;
+  const products = await getProducts();
 
   return (
 
@@ -28,28 +17,14 @@ export default async function ProductsPage() {
 
       <div className="space-y-6">
 
-        {products.map((product) => (
+        {products.map((product: any) => (
 
-          <div
+          <ProductCard
             key={product.id}
-            className="rounded-lg border p-4"
-          >
-
-            <img
-              src={product.thumbnail}
-              alt={product.title}
-              className="mb-3 h-40 w-40 object-cover"
-            />
-
-            <h2 className="text-xl font-semibold">
-              {product.title}
-            </h2>
-
-            <p className="text-gray-600">
-              ${product.price}
-            </p>
-
-          </div>
+            title={product.title}
+            price={product.price}
+            thumbnail={product.thumbnail}
+          />
 
         ))}
 
