@@ -1,3 +1,6 @@
+export const instant = false;
+
+
 type Product = {
   id: number;
   title: string;
