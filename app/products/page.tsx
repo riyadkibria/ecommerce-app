@@ -1,36 +1,42 @@
-export const instant = false;
+import { getProducts } from "@/app/actions/products";
 
-import ProductCard from "@/components/ProductCard";
-import { getProducts } from "@/lib/products";
+import ProductGrid from "@/components/products/ProductGrid";
 
-export default async function ProductsPage() {
 
-  const products = await getProducts();
+
+export default async function ProductsPage(){
+
+
+  const products =
+    await getProducts();
+
+
 
   return (
 
-    <div className="p-8">
+    <main className="
+      max-w-7xl
+      mx-auto
+      p-6
+    ">
 
-      <h1 className="mb-6 text-3xl font-bold">
+
+      <h1 className="
+        text-3xl
+        font-bold
+        mb-8
+      ">
         Products
       </h1>
 
-      <div className="space-y-6">
 
-        {products.map((product: any) => (
 
-          <ProductCard
-            key={product.id}
-            title={product.title}
-            price={product.price}
-            thumbnail={product.thumbnail}
-          />
+      <ProductGrid
+        products={products}
+      />
 
-        ))}
 
-      </div>
-
-    </div>
+    </main>
 
   );
 
