@@ -10,12 +10,12 @@ import { getCartSession } from "@/lib/cart/session";
 // GET OR CREATE CART
 // =====================================
 
-
 export async function getOrCreateCart() {
 
 
   const supabase =
     await createClient();
+
 
 
 
@@ -30,6 +30,7 @@ export async function getOrCreateCart() {
 
 
 
+
   // =====================================
   // LOGGED USER CART
   // =====================================
@@ -39,7 +40,8 @@ export async function getOrCreateCart() {
 
 
     const {
-      data:cart
+      data:cart,
+      error:fetchError
 
     } =
     await supabase
@@ -57,11 +59,24 @@ export async function getOrCreateCart() {
 
 
 
+
+    if(fetchError){
+
+      throw new Error(
+        fetchError.message
+      );
+
+    }
+
+
+
+
     if(cart){
 
       return cart;
 
     }
+
 
 
 
@@ -75,13 +90,16 @@ export async function getOrCreateCart() {
       .from("carts")
       .insert({
 
-        user_id:user.id,
+        user_id:
+          user.id,
 
-        status:"active"
+        status:
+          "active"
 
       })
       .select()
       .single();
+
 
 
 
@@ -96,10 +114,13 @@ export async function getOrCreateCart() {
 
 
 
+
     return newCart;
 
 
   }
+
+
 
 
 
@@ -111,15 +132,16 @@ export async function getOrCreateCart() {
   // =====================================
 
 
-
   const sessionId =
     await getCartSession();
 
 
 
 
+
   const {
-    data:guestCart
+    data:guestCart,
+    error:guestFetchError
 
   } =
   await supabase
@@ -138,11 +160,26 @@ export async function getOrCreateCart() {
 
 
 
+
+  if(guestFetchError){
+
+    throw new Error(
+      guestFetchError.message
+    );
+
+  }
+
+
+
+
+
   if(guestCart){
 
     return guestCart;
 
   }
+
+
 
 
 
@@ -172,6 +209,7 @@ export async function getOrCreateCart() {
 
 
 
+
   if(error){
 
     throw new Error(
@@ -179,6 +217,7 @@ export async function getOrCreateCart() {
     );
 
   }
+
 
 
 
@@ -193,12 +232,14 @@ export async function getOrCreateCart() {
 
 
 
+
+
 // =====================================
 // GET CART WITH PRODUCTS
 // =====================================
 
-
 export async function getCart(){
+
 
 
   const supabase =
@@ -206,8 +247,12 @@ export async function getCart(){
 
 
 
+
   const cart =
     await getOrCreateCart();
+
+
+
 
 
 
@@ -220,6 +265,7 @@ export async function getCart(){
   await supabase
     .from("cart_items")
     .select(
+
       `
       id,
       quantity,
@@ -233,13 +279,16 @@ export async function getCart(){
         rating,
         stock
       )
-
       `
+
     )
     .eq(
       "cart_id",
       cart.id
     );
+
+
+
 
 
 
@@ -256,26 +305,57 @@ export async function getCart(){
 
 
 
+
+
+  const formattedItems =
+    (items ?? []).map(
+      (item:any)=>({
+
+        id:
+          item.id,
+
+
+        quantity:
+          item.quantity,
+
+
+        unit_price:
+          Number(
+            item.unit_price
+          ),
+
+
+        product:
+          item.product
+
+
+      })
+    );
+
+
+
+
+
+
+
+
   const total =
-    items?.reduce(
+    formattedItems.reduce(
 
       (
         sum,
         item
-      ) => {
+      )=>{
 
 
         return (
 
           sum +
 
-          Number(
-            item.unit_price
+          (
+            item.unit_price *
+            item.quantity
           )
-
-          *
-
-          item.quantity
 
         );
 
@@ -284,7 +364,10 @@ export async function getCart(){
 
       0
 
-    ) ?? 0;
+    );
+
+
+
 
 
 
@@ -298,7 +381,8 @@ export async function getCart(){
 
 
     items:
-      items ?? [],
+      formattedItems,
+
 
 
     total

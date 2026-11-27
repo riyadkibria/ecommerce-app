@@ -1,102 +1,68 @@
-"use client";
-
-
 import Image from "next/image";
 
-
+import {
+  increaseCartItem,
+  decreaseCartItem,
+  removeCartItem,
+} from "@/app/actions/cart/items";
 
 type CartItemProps = {
-
   item: {
+    id: string;
+    quantity: number;
+    unit_price: number;
 
-    id:string;
-
-    quantity:number;
-
-    unit_price:number;
-
-    product:{
-
-      id:string;
-
-      name:string;
-
-      thumbnail:string | null;
-
-      price:number;
-
+    product: {
+      id: string;
+      name: string;
+      thumbnail: string | null;
+      price: number;
     };
-
   };
-
 };
 
-
-
-
-
 export default function CartItem({
-  item
-}:CartItemProps){
+  item,
+}: CartItemProps) {
+  const product = item.product;
 
-
-  const {
-    product
-  } = item;
-
-
+  const itemTotal =
+    item.unit_price * item.quantity;
 
   return (
-
     <div
       className="
         flex
         gap-4
-        border-b
-        py-4
+        py-5
       "
     >
-
-
-      {/* Product Image */}
+      {/* Image */}
 
       <div
         className="
           relative
-          h-20
-          w-20
+          h-24
+          w-24
+          shrink-0
           overflow-hidden
-          rounded-lg
+          rounded-xl
           bg-gray-100
         "
       >
-
         <Image
-
           src={
             product.thumbnail ??
             "/images/placeholder.png"
           }
-
-          alt={
-            product.name
-          }
-
+          alt={product.name}
           fill
-
-          className="
-            object-cover
-          "
-
+          sizes="96px"
+          className="object-cover"
         />
-
       </div>
 
-
-
-
-
-      {/* Product Info */}
+      {/* Content */}
 
       <div
         className="
@@ -106,24 +72,15 @@ export default function CartItem({
           justify-between
         "
       >
-
-
         <div>
-
-
           <h3
             className="
               text-sm
-              font-medium
+              font-semibold
             "
           >
-
             {product.name}
-
           </h3>
-
-
-
 
           <p
             className="
@@ -132,96 +89,124 @@ export default function CartItem({
               text-gray-500
             "
           >
-
             ৳ {item.unit_price}
-
           </p>
-
-
         </div>
-
-
-
-
-
-        {/* Bottom */}
 
         <div
           className="
-            mt-3
+            mt-4
             flex
             items-center
             justify-between
           "
         >
-
-
           {/* Quantity */}
 
           <div
             className="
               flex
               items-center
-              gap-3
+              overflow-hidden
               rounded-lg
               border
-              px-3
-              py-1
             "
           >
+            {/* Decrease */}
 
-            <button>
-              -
-            </button>
+            <form
+              action={decreaseCartItem.bind(
+                null,
+                item.id
+              )}
+            >
+              <button
+                type="submit"
+                className="
+                  px-3
+                  py-1
+                  transition
+                  hover:bg-gray-100
+                "
+              >
+                -
+              </button>
+            </form>
 
+            {/* Quantity */}
 
             <span
               className="
+                px-4
                 text-sm
+                font-medium
               "
             >
-
               {item.quantity}
-
             </span>
 
+            {/* Increase */}
 
-
-            <button>
-              +
-            </button>
-
-
+            <form
+              action={increaseCartItem.bind(
+                null,
+                item.id
+              )}
+            >
+              <button
+                type="submit"
+                className="
+                  px-3
+                  py-1
+                  transition
+                  hover:bg-gray-100
+                "
+              >
+                +
+              </button>
+            </form>
           </div>
 
+          {/* Total */}
 
-
-
-
-          <button
-
+          <div
             className="
-              text-sm
-              text-red-500
-              hover:text-red-700
+              flex
+              items-center
+              gap-4
             "
-
           >
+            <span
+              className="
+                font-semibold
+              "
+            >
+              ৳ {itemTotal}
+            </span>
 
-            Remove
+            {/* Remove */}
 
-          </button>
-
-
+            <form
+              action={removeCartItem.bind(
+                null,
+                item.id
+              )}
+            >
+              <button
+                type="submit"
+                className="
+                  text-sm
+                  text-red-500
+                  transition
+                  hover:text-red-700
+                "
+              >
+                Remove
+              </button>
+            </form>
+          </div>
         </div>
-
-
       </div>
-
-
     </div>
-
   );
-
-
 }

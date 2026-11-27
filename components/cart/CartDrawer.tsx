@@ -10,6 +10,8 @@ import { getCart } from "@/app/actions/cart";
 
 
 
+
+
 type CartDrawerProps = {
 
   open:boolean;
@@ -17,6 +19,8 @@ type CartDrawerProps = {
   onClose:()=>void;
 
 };
+
+
 
 
 
@@ -34,6 +38,8 @@ type CartData = {
 
 
 
+
+
 export default function CartDrawer({
 
   open,
@@ -44,8 +50,11 @@ export default function CartDrawer({
 
 
 
+
+
   const [cart,setCart] =
     useState<CartData | null>(null);
+
 
 
 
@@ -56,23 +65,41 @@ export default function CartDrawer({
 
 
 
+
+
   async function loadCart(){
 
 
-    setLoading(true);
+    try{
 
 
-    const data =
-      await getCart();
+      setLoading(true);
 
 
-    setCart(data);
+
+      const data =
+        await getCart();
 
 
-    setLoading(false);
+
+      setCart(data);
+
+
+
+    }
+
+    finally{
+
+
+      setLoading(false);
+
+
+    }
 
 
   }
+
+
 
 
 
@@ -97,6 +124,8 @@ export default function CartDrawer({
 
 
 
+
+
   return (
 
     <>
@@ -104,6 +133,7 @@ export default function CartDrawer({
 
       {
         open &&
+
 
         <div
 
@@ -118,7 +148,11 @@ export default function CartDrawer({
 
         />
 
+
       }
+
+
+
 
 
 
@@ -128,25 +162,43 @@ export default function CartDrawer({
       <aside
 
         className={`
+
           fixed
+
           right-0
+
           top-0
+
           z-50
+
           h-full
+
           w-full
+
           max-w-md
+
           bg-white
+
           p-6
+
           shadow-xl
+
           transition-transform
+
           duration-300
+
 
           ${
             open
+
             ?
+
             "translate-x-0"
+
             :
+
             "translate-x-full"
+
           }
 
         `}
@@ -155,19 +207,29 @@ export default function CartDrawer({
 
 
 
+
+
+
         <div
+
           className="
+            mb-6
             flex
             justify-between
-            mb-6
+            items-center
           "
+
         >
 
+
+
           <h2
+
             className="
               text-xl
               font-semibold
             "
+
           >
 
             Cart
@@ -176,8 +238,16 @@ export default function CartDrawer({
 
 
 
+
+
           <button
+
             onClick={onClose}
+
+            className="
+              text-xl
+            "
+
           >
 
             ✕
@@ -185,7 +255,11 @@ export default function CartDrawer({
           </button>
 
 
+
         </div>
+
+
+
 
 
 
@@ -196,7 +270,9 @@ export default function CartDrawer({
           loading &&
 
           <p>
+
             Loading...
+
           </p>
 
         }
@@ -206,22 +282,37 @@ export default function CartDrawer({
 
 
 
+
+
         {
           !loading &&
           cart?.items.map(
+
             (item)=>(
+
 
               <CartItem
 
-                key={item.id}
+                key={
+                  item.id
+                }
 
-                item={item}
+                item={
+                  item
+                }
+
 
               />
 
+
             )
+
           )
         }
+
+
+
+
 
 
 
@@ -230,19 +321,37 @@ export default function CartDrawer({
         {
           cart &&
 
+
           <CartSummary
 
+
             total={
+
               cart.total
+
             }
 
+
+            itemCount={
+
+              cart.items.length
+
+            }
+
+
           />
+
 
         }
 
 
 
+
+
+
+
       </aside>
+
 
 
 

@@ -5,5 +5,9 @@ export {
 
 
 export {
-  addToCart
+  addToCart,
+  updateCartQuantity,
+  increaseCartItem,
+  decreaseCartItem,
+  removeCartItem
 } from "./items";

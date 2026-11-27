@@ -76,8 +76,16 @@ export default function ProductInfo({
       {/* Add To Cart */}
 
       <AddToCartButton
-        productId={product.id}
-      />
+
+  productId={
+    product.id
+  }
+
+  stock={
+    product.stock
+  }
+
+/>
 
     </div>
 

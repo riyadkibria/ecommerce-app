@@ -1,22 +1,18 @@
 "use client";
 
-
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
 import type { Product } from "@/types/product";
 
-import { addToCart } from "@/app/actions/cart";
+import { addToCart } from "@/app/actions/cart/items";
 
 
 
 type ProductCardProps = {
-
   product: Product;
-
 };
-
 
 
 
@@ -43,9 +39,7 @@ export default function ProductCard({
 
 
 
-
-
-  async function handleAddToCart() {
+  async function handleAddToCart(){
 
 
     if(
@@ -59,17 +53,15 @@ export default function ProductCard({
 
 
 
-    try {
+    try{
 
 
       setStatus("loading");
 
 
-
       await addToCart(
         product.id
       );
-
 
 
       setStatus("added");
@@ -92,7 +84,6 @@ export default function ProductCard({
         "Add to cart error:",
         error
       );
-
 
 
       setStatus("idle");
@@ -153,7 +144,6 @@ export default function ProductCard({
 
           >
 
-
             <Image
 
               src={
@@ -195,7 +185,6 @@ export default function ProductCard({
           >
 
 
-
             <h2
 
               className="
@@ -211,10 +200,7 @@ export default function ProductCard({
 
               {product.name}
 
-
             </h2>
-
-
 
 
 
@@ -231,13 +217,11 @@ export default function ProductCard({
             >
 
 
-
               <p
 
                 className="
                   text-lg
                   font-bold
-                  tracking-tight
                 "
 
               >
@@ -252,9 +236,6 @@ export default function ProductCard({
               <span
 
                 className="
-                  flex
-                  items-center
-                  gap-1
                   text-xs
                   text-amber-500
                 "
@@ -274,56 +255,38 @@ export default function ProductCard({
 
 
 
+            <span
 
-            <div
-
-              className="
-                flex
-                items-center
-                justify-between
-                text-xs
-              "
+              className={`text-xs font-medium ${
+                outOfStock
+                ?
+                "text-red-500"
+                :
+                lowStock
+                ?
+                "text-amber-600"
+                :
+                "text-green-600"
+              }`}
 
             >
 
+              {
+                outOfStock
+                ?
+                "Out of stock"
+                :
+                `${product.stock} left`
+              }
 
-
-              <span
-
-                className={`font-medium ${
-                  outOfStock
-                    ? "text-red-500"
-                    : lowStock
-                    ? "text-amber-600"
-                    : "text-green-600"
-                }`}
-
-              >
-
-                {
-                  outOfStock
-                  ?
-                  "Out of stock"
-                  :
-                  `${product.stock} left`
-                }
-
-
-              </span>
-
-
-
-            </div>
-
+            </span>
 
 
 
           </div>
 
 
-
         </div>
-
 
 
       </Link>
@@ -342,7 +305,6 @@ export default function ProductCard({
         "
 
       >
-
 
 
         <button
@@ -379,35 +341,20 @@ export default function ProductCard({
         >
 
 
-
           {
-            outOfStock &&
+            outOfStock
+            ?
             "Out of Stock"
-          }
-
-
-
-
-          {
-            !outOfStock &&
-            status === "idle" &&
-            "Add to Cart"
-          }
-
-
-
-
-          {
-            status === "loading" &&
+            :
+            status === "loading"
+            ?
             "Adding..."
-          }
-
-
-
-
-          {
-            status === "added" &&
+            :
+            status === "added"
+            ?
             "✓ Added"
+            :
+            "Add to Cart"
           }
 
 
@@ -416,9 +363,7 @@ export default function ProductCard({
 
 
 
-
       </div>
-
 
 
 
