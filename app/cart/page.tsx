@@ -1,3 +1,5 @@
+
+export const instant = false;
 import { getCart } from "@/app/actions/cart/cart";
 
 import CartItem from "@/components/cart/CartItem";
